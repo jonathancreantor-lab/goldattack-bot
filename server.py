@@ -16,7 +16,7 @@ logger = logging.getLogger(__name__)
 BOT_TOKEN     = "8755477782:AAFrnbNhCqy8XfBpRd9TlzIzvL_ydRXIL78"
 CHAT_ID       = "1035061255"
 SECRET        = "goldattack2025"
-ANTHROPIC_KEY = "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"
+ANTHROPIC_KEY = "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"
 PARIS_TZ      = ZoneInfo("Europe/Paris")
 
 bot    = Bot(token=BOT_TOKEN)
@@ -45,7 +45,15 @@ async def get_price(pair_key: str) -> float:
                 r = await client.get(f"https://api.binance.com/api/v3/ticker/price?symbol={info['symbol']}")
                 return float(r.json()["price"])
             elif info.get("type") == "metal":
-                r = await client.get("https://open.er-api.com/v6/latest/XAU")
+                # Utilise Binance XAUUSDT ou fallback
+                try:
+                    r = await client.get("https://api.binance.com/api/v3/ticker/price?symbol=XAUUSDT")
+                    if r.status_code == 200:
+                        return float(r.json()["price"])
+                except:
+                    pass
+                # Fallback: Frankfurter API
+                r = await client.get("https://api.frankfurter.app/latest?from=XAU&to=USD")
                 data = r.json()
                 if "rates" in data:
                     return round(data["rates"]["USD"], 2)
@@ -475,8 +483,7 @@ async def main():
 
     await tg_app.initialize()
     await tg_app.start()
-    await tg_app.updater.start_polling(drop_pending_updates=True)
-
+    await tg_app.updater.start_polling()
     logger.info("GoldAttack Bot actif 24/7")
 
     while True:
