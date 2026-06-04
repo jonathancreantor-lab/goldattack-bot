@@ -5,7 +5,7 @@ import httpx
 from datetime import datetime, timedelta
 from zoneinfo import ZoneInfo
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
-from telegram import Bot
+from telegram import Bot, Update
 from telegram.ext import Application, CommandHandler
 from telegram.constants import ParseMode
 import anthropic
