@@ -483,7 +483,7 @@ async def main():
 
     await tg_app.initialize()
     await tg_app.start()
-    await tg_app.updater.start_polling()
+    await tg_app.updater.start_polling(drop_pending_updates=True, allowed_updates=Update.ALL_TYPES)
     logger.info("GoldAttack Bot actif 24/7")
 
     while True:
