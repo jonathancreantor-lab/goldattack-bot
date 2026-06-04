@@ -179,7 +179,7 @@ Sois concis, percutant. Markdown Telegram.""")
             f"━━━━━━━━━━━━━━━━━━━━━\n"
             f"_08:00 — GoldAttack Bot_"
         )
-        await bot.send_message(chat_id=CHAT_ID, text=text, parse_mode=ParseMode.MARKDOWN)
+        await bot.send_message(chat_id=CHAT_ID, text=text, parse_mode=None)
         logger.info("Briefing 8h envoyé")
     except Exception as e:
         logger.error(f"Briefing error: {e}")
@@ -219,7 +219,7 @@ Style journaliste financier, percutant. Markdown Telegram.""")
             f"━━━━━━━━━━━━━━━━━━━━━\n"
             f"_23:00 — GoldAttack Bot_"
         )
-        await bot.send_message(chat_id=CHAT_ID, text=text, parse_mode=ParseMode.MARKDOWN)
+        await bot.send_message(chat_id=CHAT_ID, text=text, parse_mode=None)
         logger.info("Débrief soir envoyé")
     except Exception as e:
         logger.error(f"Evening debrief error: {e}")
@@ -282,7 +282,7 @@ Style magazine financier, structuré et engageant. Markdown Telegram.""", max_to
             f"_Vendredi 23:00 — GoldAttack Bot_\n"
             f"_Bon week-end 💪_"
         )
-        await bot.send_message(chat_id=CHAT_ID, text=text, parse_mode=ParseMode.MARKDOWN)
+        await bot.send_message(chat_id=CHAT_ID, text=text, parse_mode=None)
         logger.info("Débrief hebdo envoyé")
     except Exception as e:
         logger.error(f"Weekly debrief error: {e}")
@@ -314,7 +314,7 @@ async def check_unexpected_events():
                     f"Précédent : {event['previous']}\n\n"
                     f"⚠️ _Cette annonce n'était pas au programme — restez vigilant_"
                 )
-                await bot.send_message(chat_id=CHAT_ID, text=text, parse_mode=ParseMode.MARKDOWN)
+                await bot.send_message(chat_id=CHAT_ID, text=text, parse_mode=None)
             seen_events = current_ids
 
         # Vérifie les résultats d'annonces passées
@@ -360,7 +360,7 @@ Sois direct et utile. Markdown Telegram.""", max_tokens=300)
             f"Prévision : {forecast} | Précédent : {previous}\n\n"
             f"{analysis}"
         )
-        await bot.send_message(chat_id=CHAT_ID, text=text, parse_mode=ParseMode.MARKDOWN)
+        await bot.send_message(chat_id=CHAT_ID, text=text, parse_mode=None)
     except Exception as e:
         logger.error(f"Event result error: {e}")
 
@@ -416,7 +416,7 @@ Direct, précis, utile. Markdown Telegram.""")
 async def handle_pair(update, context, pair_key):
     await update.message.reply_text("⏳ Analyse en cours...")
     text = await analyze_pair(pair_key)
-    await update.message.reply_text(text, parse_mode=ParseMode.MARKDOWN)
+    await update.message.reply_text(text, parse_mode=None)
 
 async def cmd_start(update, context):
     await update.message.reply_text(
@@ -434,7 +434,7 @@ async def cmd_start(update, context):
         "📋 Vendredi 23:00 — Débrief hebdo\n"
         "⚡ Alertes annonces imprévues\n"
         "📊 Résultats après chaque annonce",
-        parse_mode=ParseMode.MARKDOWN
+        parse_mode=None
     )
 
 async def cmd_xauusd(u, c): await handle_pair(u, c, "xauusd")
